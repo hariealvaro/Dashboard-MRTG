@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="ISO-8859-15">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="300">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="Mon, 23 Sep 2024 08:25:05 GMT">
+    <title>Traffic Mikrotik Distriusi</title>
+    <link href="favicon.ico" rel="shortcut icon">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            background-color: #f1f1f1;
+            padding: 15px;
+            margin: 0;
+            font-size: 30px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .back-button {
+            text-align: left;
+            max-width: 1000px;
+            margin: 10px auto;
+        }
+
+        .back-button a {
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            text-decoration: none;
+            font-size: 14px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button a:hover {
+            background-color: #45a049;
+        }
+
+        .search-bar {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .search-bar input[type="text"] {
+            width: 100%;
+            max-width: 600px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap; /* Allow columns to wrap on small screens */
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 6px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .column {
+            flex: 1;
+            padding: 10px;
+            min-width: 300px; /* Set a minimum width for columns */
+        }
+
+        .traffic-item {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 15px;
+            transition: transform 0.2s ease;
+        }
+
+        .traffic-item:hover {
+            transform: scale(1.02);
+        }
+
+        .traffic-item img {
+            width: 100%;
+            border-radius: 6px;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e0e0e0;
+            color: #333;
+            font-size: 14px;
+            border-top: 1px solid #ccc;
+        }
+
+        .footer a {
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 24px; /* Smaller title on mobile */
+            }
+
+            .back-button a {
+                font-size: 12px; /* Smaller button font on mobile */
+                padding: 4px 8px; /* Smaller button padding */
+            }
+
+            .search-bar input[type="text"] {
+                font-size: 14px; /* Smaller search input font */
+            }
+
+            .traffic-item {
+                padding: 8px; /* Smaller padding for traffic items */
+            }
+
+            h2 {
+                font-size: 14px; /* Smaller heading font */
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 20px; /* Even smaller title on very small screens */
+            }
+
+            .back-button a {
+                width: 100%; /* Full width button on small screens */
+                text-align: center; /* Center align text */
+            }
+        }
+    </style>
+
+    <script>
+        // Fungsi untuk filter traffic secara otomatis saat mengetik
+        function searchTraffic() {
+            var input = document.getElementById('search-input').value.toLowerCase();
+            var trafficItems = document.getElementsByClassName('traffic-item');
+
+            for (var i = 0; i < trafficItems.length; i++) {
+                var trafficTitle = trafficItems[i].getElementsByTagName('h2')[0].innerText.toLowerCase();
+                
+                // Filter berdasarkan input, tampilkan item jika sesuai dengan pencarian
+                if (trafficTitle.includes(input)) {
+                    trafficItems[i].style.display = "";
+                } else {
+                    trafficItems[i].style.display = "none";
+                }
+            }
+
+            // Jika input dikosongkan, tampilkan semua item
+            if (input === "") {
+                for (var i = 0; i < trafficItems.length; i++) {
+                    trafficItems[i].style.display = "";
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+
+<h1>Monitoring Mikrotik Distribusi</h1>
+
+<!-- Back Button Section -->
+<div class="back-button">
+    <a href="index.html">Back to Home</a>
+</div>
+
+<!-- Search Bar Section -->
+<div class="search-bar">
+    <input id="search-input" type="text" placeholder="Search traffic data..." onkeyup="searchTraffic()">
+</div>
+
+<div class="container">
+    <div class="column">
+        <div class="traffic-item">
+            <h2>Traffic Analysis for combo1-PTP -- MT-Distribusi</h2>
+            <a href="192.168.60.1_combo1-ptp.html">
+                <img src="192.168.60.1_combo1-ptp-day.png" alt="Traffic Graph">
+            </a>
+        </div>
+
+        <div class="traffic-item">
+            <h2>Traffic Analysis for ether2-307-LT2 -- MT-Distribusi</h2>
+            <a href="192.168.60.1_ether2-307-lt2.html">
+                <img src="192.168.60.1_ether2-307-lt2-day.png" alt="Traffic Graph">
+            </a>
+        </div>
+
+        <div class="traffic-item">
+            <h2>Traffic Analysis for ether1-Moratel</h2>
+            <a href="192.168.150.1_ether1-moratel.html">
+                <img src="192.168.150.1_ether1-moratel-day.png" alt="Traffic Graph">
+            </a>
+        </div>
+
+        <div class="traffic-item">
+            <h2>Traffic Analysis for ether2-Biznet</h2>
+            <a href="192.168.150.1_ether2-biznet.html">
+                <img src="192.168.150.1_ether2-biznet-day.png" alt="Traffic Graph">
+            </a>
+        </div>
+    </div>
+
+    <div class="column">
+        <div class="traffic-item">
+            <h2>Traffic Analysis for ether3-Output-LB</h2>
+            <a href="192.168.150.1_ether3-output-lb.html">
+                <img src="192.168.150.1_ether3-output-lb-day.png" alt="Traffic Graph">
+            </a>
+        </div>
+
+        <div class="traffic-item">
+            <h2>Traffic Analysis for ether5-TRUNK-SW-NOKIA</h2>
+            <a href="192.168.150.1_ether5-trunk-sw-nokia.html">
+                <img src="192.168.150.1_ether5-trunk-sw-nokia-day.png" alt="Traffic Graph">
+            </a>
+        </div>
+
+        <div class="traffic-item">
+            <h2>Traffic Analysis for vlan108-OAM-ONT-NOKIA</h2>
+            <a href="192.168.150.1_vlan108-oam-ont-nokia.html">
+                <img src="192.168.150.1_vlan108-oam-ont-nokia-day.png" alt="Traffic Graph">
+            </a>
+        </div>
+
+        <div class="traffic-item">
+            <h2>Traffic Analysis for vlan170-PPPoE-OLT-NOKIA</h2>
+            <a href="192.168.150.1_vlan170-pppoe-olt-nokia.html">
+                <img src="192.168.150.1_vlan170-pppoe-olt-nokia-day.png" alt="Traffic Graph">
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <p>
+        <a href="http://oss.oetiker.ch/mrtg/">MRTG</a> - Multi Router Traffic Grapher<br>
+        Monitoring Mikrotik Loadbalance
+    </p>
+</div>
+
+</body>
+</html>

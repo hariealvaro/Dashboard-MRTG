@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRTG Surge Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        h1 {
+            text-align: center;
+            color: #333333;
+            padding: 20px;
+            margin: 0;
+            background-color: #f1f1f1;
+            border-bottom: 2px solid #e0e0e0;
+            font-size: 36px;
+        }
+        .menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .menu-item {
+            position: relative;
+            margin: 5px;
+        }
+        .menu-item a {
+            text-decoration: none;
+            font-size: 18px;
+            color: #ffffff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            background-color: #333333;
+            transition: background-color 0.3s ease;
+            display: block;
+        }
+        .menu-item a:hover {
+            background-color: #444444;
+        }
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #333333;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            z-index: 1;
+        }
+        .dropdown a {
+            padding: 10px 15px;
+            white-space: nowrap;
+            color: #ffffff;
+        }
+        .menu-item:hover .dropdown {
+            display: block;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 12px;
+        }
+        .list-container {
+            flex: 1;
+            max-width: 400px;
+            margin-right: 60px;
+        }
+        .chart-container {
+            flex: 2;
+            max-width: 600px;
+            margin-left: 40px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        ul li {
+            margin: 15px 0;
+        }
+        ul li a {
+            text-decoration: none;
+            font-size: 18px;
+            color: #333333;
+            background-color: #e0e0e0;
+            padding: 12px;
+            border-radius: 8px;
+            display: block;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        ul li a:hover {
+            background-color: #cccccc;
+            transform: scale(1.03);
+        }
+        ul li a:active {
+            background-color: #aaaaaa;
+        }
+        .search-container {
+            margin-bottom: 15px;
+            max-width: 100%;
+        }
+        .search-container input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #cccccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .search-container input:focus {
+            outline: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #333333;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: 20px;
+            border-top: 2px solid #444444;
+        }
+        footer p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .menu-item a {
+                font-size: 16px;
+                padding: 8px 10px;
+            }
+            .container {
+                flex-direction: column;
+                align-items: center;
+                padding: 10px;
+            }
+            .list-container, .chart-container {
+                margin: 0;
+                max-width: 100%;
+            }
+            h1 {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 24px;
+            }
+            .menu-item a {
+                font-size: 14px;
+                padding: 6px 8px;
+            }
+            .search-container input {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Dashboard Traffic Network PT Surge</h1>
+
+    <!-- Menu Dropdown -->
+    <div class="menu">
+        <div class="menu-item">
+            <a href="index.html">Home</a>
+        </div>
+        <div class="menu-item">
+            <a href="#">Device Utama</a>
+            <div class="dropdown">
+                <a href="mt-loadbalance.html">Mikrotik Loadbalance</a>
+                <a href="mt-distribusi.html">Mikrotik Distribusi</a>
+            </div>
+        </div>
+        <div class="menu-item">
+            <a href="#">Device 328</a>
+            <div class="dropdown">
+                <a href="mt-328-lt2.html">Mikrotik 328 Lt 2</a>
+                <a href="mt-328-lt3.html">Mikrotik 328 Lt 3</a>
+                <a href="mt-328-lt4.html">Mikrotik 328 Lt 4</a>
+                <a href="mt-328-lt5.html">Mikrotik 328 Lt 5</a>
+            </div>
+        </div>
+        <div class="menu-item">
+            <a href="#">Device 307</a>
+            <div class="dropdown">
+                <a href="switch-manage-307-lt2.html">Switch Manage 307 Lt 2</a>
+                <a href="mt-307-lt1.html">Mikrotik 307 R.Meeting Lt 1</a>
+            </div>
+        </div>
+        <div class="menu-item">
+            <a href="#">Device 205</a>
+            <div class="dropdown">
+                <a href="mt-205.html">Mikrotik 205</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Container with Search Bar and List of Devices -->
+    <div class="container">
+        <div class="list-container">
+            <div class="search-container">
+                <input type="text" id="searchInput" onkeyup="filterList()" placeholder="Cari perangkat...">
+            </div>
+            <ul id="deviceList" style="width: 100%;">
+                <li><a href="mt-loadbalance.html">Mikrotik Loadbalance</a></li>
+                <li><a href="mt-distribusi.html">Mikrotik Distribusi</a></li>
+                <li><a href="mt-328-lt2.html">Mikrotik 328 Lt 2</a></li>
+                <li><a href="mt-328-lt3.html">Mikrotik 328 Lt 3</a></li>
+                <li><a href="mt-328-lt4.html">Mikrotik 328 Lt 4</a></li>
+                <li><a href="mt-328-lt5.html">Mikrotik 328 Lt 5</a></li>
+                <li><a href="switch-manage-307-lt2.html">Switch Manage 307 Lt 2</a></li>
+                <li><a href="mt-307-lt1.html">Mikrotik 307 Lt 1</a></li>
+                <li><a href="mt-205.html">Mikrotik 205</a></li>
+            </ul>
+        </div>
+
+        <!-- Chart Container -->
+        <div class="chart-container">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 PT Solusi Sinergi Digital, Tbk (Surge)</p>
+        <p>By IT Helpdesk</p>
+    </footer>
+
+    <!-- Chart.js Script -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var deviceCounts = {
+            'Device Utama': 2,
+            'Device 328': 4,
+            'Device 307': 2,
+            'Device 205': 1
+        };
+
+        var labels = Object.keys(deviceCounts);
+        var data = Object.values(deviceCounts);
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Jumlah Perangkat Ada',
+                    data: data,
+                    backgroundColor: [
+                        '#ff6384',
+                        '#36a2eb',
+                        '#ffce56',
+                        '#4bc0c0',
+                        '#c2c2f0'
+                    ],
+                }],
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Jumlah Perangkat PT Surge'
+                    }
+                }
+            }
+        });
+
+        function filterList() {
+            var input = document.getElementById('searchInput');
+            var filter = input.value.toLowerCase();
+            var ul = document.getElementById("deviceList");
+            var li = ul.getElementsByTagName('li');
+
+            for (var i = 0; i < li.length; i++) {
+                var a = li[i].getElementsByTagName("a")[0];
+                if (a) {
+                    var txtValue = a.textContent || a.innerText;
+                    li[i].style.display = txtValue.toLowerCase().indexOf(filter) > -1 ? "" : "none";
+                }       
+            }
+        }
+    </script>
+</body>
+</html>
